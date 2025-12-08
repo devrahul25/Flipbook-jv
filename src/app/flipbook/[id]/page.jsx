@@ -2,21 +2,34 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import HTMLFlipBook from "react-pageflip";
-import * as pdfjsLib from "pdfjs-dist/webpack";
+
+
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+// --- LOCAL STORAGE ---
+import localforage from "localforage";
+
+// --- FIREBASE (COMMENTED) ---
+// import { doc, getDoc } from "firebase/firestore";
+// import { db } from "@/lib/firebase";
 
 export default function FlipbookPage() {
   const { id } = useParams();
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
-    const fetchPDF = async () => {
-      const snap = await getDoc(doc(db, "pdfs", id));
-      const pdfURL = snap.data().pdfURL;
+    const loadPDF = async () => {
+      // Load local PDF
+      const file = await localforage.getItem(id);
+      if (!file) return;
 
-      const pdf = await pdfjsLib.getDocument(pdfURL).promise;
+      const pdf = await pdfjsLib.getDocument({
+        data: await file.arrayBuffer(),
+      }).promise;
+
       const imgs = [];
 
       for (let i = 1; i <= pdf.numPages; i++) {
@@ -29,10 +42,7 @@ export default function FlipbookPage() {
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 
-        await page.render({
-          canvasContext: ctx,
-          viewport,
-        }).promise;
+        await page.render({ canvasContext: ctx, viewport }).promise;
 
         imgs.push(canvas.toDataURL());
       }
@@ -40,7 +50,7 @@ export default function FlipbookPage() {
       setPages(imgs);
     };
 
-    if (id) fetchPDF();
+    loadPDF();
   }, [id]);
 
   if (!pages.length) return <p className="p-10">Loading flipbook...</p>;

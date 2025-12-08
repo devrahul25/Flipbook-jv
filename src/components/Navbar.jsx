@@ -30,15 +30,15 @@ export default function Navbar() {
     }
   };
 
-  // ✅ Extract initials from email
+  
   function generateInitials(email) {
-    const clean = email.split("@")[0]; // remove domain
-    const parts = clean.split(/[\.\_\-]/); // split by dot, underscore, dash
+    const clean = email.split("@")[0]; 
+    const parts = clean.split(/[\.\_\-]/); 
 
     if (parts.length === 1) {
-      return parts[0][0]?.toUpperCase(); // just first letter
+      return parts[0][0]?.toUpperCase(); 
     } else {
-      return (parts[0][0] + parts[1][0]).toUpperCase(); // first letter of 2 words
+      return (parts[0][0] + parts[1][0]).toUpperCase(); 
     }
   }
 
