@@ -88,7 +88,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-slate-950 to-slate-900 px-4">
       <div className="w-full max-w-md bg-white/95 dark:bg-gray-900/95 rounded-2xl shadow-2xl border border-slate-800 p-8">
         <h1 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-2">
           Create your account

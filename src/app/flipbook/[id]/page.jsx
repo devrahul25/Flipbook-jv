@@ -11,6 +11,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.j
 
 // --- LOCAL STORAGE ---
 import localforage from "localforage";
+import Navbar from "@/components/Navbar";
 
 // --- FIREBASE (COMMENTED) ---
 // import { doc, getDoc } from "firebase/firestore";
@@ -56,14 +57,17 @@ export default function FlipbookPage() {
   if (!pages.length) return <p className="p-10">Loading flipbook...</p>;
 
   return (
-    <div className="flex justify-center p-10 bg-gray-100 min-h-screen">
-      <HTMLFlipBook width={400} height={600}>
-        {pages.map((src, i) => (
-          <div key={i}>
-            <img src={src} className="w-full h-full object-cover" />
-          </div>
-        ))}
-      </HTMLFlipBook>
-    </div>
+    <>
+    <Navbar/>
+      <div className="flex justify-center p-10 bg-zinc-400 min-h-screen">
+        <HTMLFlipBook width={400} height={600}>
+          {pages.map((src, i) => (
+            <div key={i}>
+              <img src={src} className="w-full h-full object-cover" />
+            </div>
+          ))}
+        </HTMLFlipBook>
+      </div>
+    </>
   );
 }

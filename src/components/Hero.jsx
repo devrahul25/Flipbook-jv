@@ -20,7 +20,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="w-full bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white py-16 md:py-24">
+    <section className="w-full bg-linear-to-br from-slate-900 via-slate-950 to-slate-900 text-white py-16 md:py-24">
       <div className="max-w-5xl mx-auto px-6 md:px-8 flex flex-col md:flex-row items-center gap-10">
         {/* Left: Text */}
         <div className="flex-1">
